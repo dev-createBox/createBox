@@ -8,8 +8,7 @@ public class CreateboxApplication {
 
 	public static void main(String[] args) {
 		
-		// 브랜치 작업 -> 마스터 합치기 충돌테스트
-		// 로컬 수정 내용
+		// 브랜치 풀리퀘 테스트
 		SpringApplication.run(CreateboxApplication.class, args);
 	}
 
