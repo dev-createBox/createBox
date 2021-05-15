@@ -7,6 +7,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class CreateboxApplication {
 
 	public static void main(String[] args) {
+		
+		
+		System.out.println("junseo-branch");
 		SpringApplication.run(CreateboxApplication.class, args);
 	}
 
