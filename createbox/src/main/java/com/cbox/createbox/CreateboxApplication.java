@@ -8,7 +8,7 @@ public class CreateboxApplication {
 
 	public static void main(String[] args) {
 		
-		// ╨Й╥ёд║ юш╬В -> ╦╤╫╨ем гуд║╠Б цФ╣╧ ев╫╨ф╝(╩Схд2╧Ь)
+		// К╦▄К·°Л╧≤ М▓─К╕╛М─≤ М┘▄Л┼╓М┼╦
 		SpringApplication.run(CreateboxApplication.class, args);
 	}
 
