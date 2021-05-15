@@ -8,7 +8,7 @@ public class CreateboxApplication {
 
 	public static void main(String[] args) {
 		
-		// �귣ġ Ǯ���� �׽�Ʈ
+		// 브랜치 풀리퀘 테스트
 		SpringApplication.run(CreateboxApplication.class, args);
 	}
 
