@@ -8,8 +8,7 @@ public class CreateboxApplication {
 
 	public static void main(String[] args) {
 		
-		
-		System.out.println("junseo-branch");
+		// 브랜치 작업 -> 마스터 합치기 테스트
 		SpringApplication.run(CreateboxApplication.class, args);
 	}
 
