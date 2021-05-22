@@ -10,6 +10,10 @@ public class CreateboxApplication {
 		
 		// 브랜치 풀리퀘 테스트
 		SpringApplication.run(CreateboxApplication.class, args);
+		
+		
+		
+		
 	}
 
 }
