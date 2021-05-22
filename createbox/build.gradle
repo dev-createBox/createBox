@@ -27,6 +27,11 @@ dependencies {
 //	runtimeOnly 'mysql:mysql-connector-java'
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	compileOnly 'org.apache.tomcat:tomcat-servlet-api:9.0.37'
+	compile 'com.google.api-client:google-api-client:1.30.9'
+    compile 'com.google.oauth-client:google-oauth-client-jetty:1.23.0'
+    compile 'com.google.apis:google-api-services-youtube:v3-rev222-1.25.0'
+
 }
 
 test {
