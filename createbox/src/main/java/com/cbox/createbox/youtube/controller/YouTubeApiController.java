@@ -10,6 +10,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -40,16 +41,18 @@ import com.google.api.services.youtube.model.Video;
 @RequestMapping("/youtube/api")
 public class YouTubeApiController {
 	
+	@Value("${api.key}")
+	private String API_KEY;
 	private static final String CLIENT_SECRETS= "/client_secret.json";
+	
 //    private static final Collection<String> SCOPES = Arrays.asList("https://www.googleapis.com/auth/youtube.force-ssl");
     private static final Collection<String> SCOPES =  Arrays.asList("https://www.googleapis.com/auth/youtube.readonly");
 //    private static final Collection<String> SCOPES = null;
 	
 	private static final HttpTransport HTTP_TRANSPORT = new NetHttpTransport();
-//	private static final JsonFactory JSON_FACTORY = new JacksonFactory();
 	private static final long NUMBER_OF_VIDEOS_RETURNED = 1;
-
-	private static final String DEVELOPER_KEY = "AIzaSyDPq7Q3Pc2w5CSsNCxEegzTEJjpdKOnwxo";
+	
+//	private static final JsonFactory JSON_FACTORY = new JacksonFactory();
     private static final JsonFactory JSON_FACTORY = JacksonFactory.getDefaultInstance();
     
     /**
@@ -67,12 +70,22 @@ public class YouTubeApiController {
     }
 
     /*
-     * API 통신을 위한 공통 Service
+     * API 통신을 위한 공통 Service(인증방법)
      */
     public static YouTube getService(String applicaton_name) throws GeneralSecurityException, IOException {
         final NetHttpTransport httpTransport = GoogleNetHttpTransport.newTrustedTransport();
         Credential credential = authorize(httpTransport);
         return new YouTube.Builder(httpTransport, JSON_FACTORY, credential).setApplicationName(applicaton_name).build();
+    }
+    
+    /*
+     * API 통신을 위한 공통 Service(인증X)
+     */
+    public static YouTube getNonAuthService(String applicaton_name) throws GeneralSecurityException, IOException {
+        final NetHttpTransport httpTransport = GoogleNetHttpTransport.newTrustedTransport();
+        return new YouTube.Builder(httpTransport, JSON_FACTORY, null)
+        				  .setApplicationName(applicaton_name)
+        				  .build();
     }
     
 	  // Oauth 방식을 위한 메서드(미완)
@@ -125,8 +138,7 @@ public class YouTubeApiController {
 		        }).setApplicationName("youtube-video-duration-get").build();
 
 	        YouTube.Videos.List videos = youtube.videos().list("id,snippet,contentDetails");
-	        videos.setKey("AIzaSyDPq7Q3Pc2w5CSsNCxEegzTEJjpdKOnwxo");     
-//	        videos.setKey("AIzaSyDx-HqMU7YIbR_zNeuVnuDvS29Ng0GGqCg");     
+	        videos.setKey(API_KEY);     
 	        videos.setId("9U5Y7lbBZjw");
 	        videos.setMaxResults(NUMBER_OF_VIDEOS_RETURNED); //조회 최대 갯수.
 	        List<Video> videoList = videos.execute().getItems();
@@ -148,11 +160,13 @@ public class YouTubeApiController {
 	@RequestMapping("/list/comment")
 	public CommentThreadListResponse listYoutubeComment() throws GeneralSecurityException, IOException {
 		String application_name = "list-comment-test";
-		YouTube youtubeService = getService(application_name);
+		
+//		YouTube youtubeService = getService(application_name);
+		YouTube youtubeService = getNonAuthService(application_name);
 		
         // Define and execute the API request
-		 YouTube.CommentThreads.List request = youtubeService.commentThreads().list("id,snippet,replies");
-		 CommentThreadListResponse response = request.setKey(DEVELOPER_KEY).setVideoId("GJ96e9ovj1s").execute();
+		YouTube.CommentThreads.List request = youtubeService.commentThreads().list("id,snippet,replies");
+		CommentThreadListResponse response = request.setKey(API_KEY).setVideoId("GJ96e9ovj1s").execute();
         
         List<CommentThread> commentList = response.getItems();
         System.out.println(commentList);
