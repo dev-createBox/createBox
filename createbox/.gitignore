@@ -38,3 +38,7 @@ out/
 
 ### Frontend ###
 ./frontend/node_modules
+
+### BackEnd ###
+application-oauth.properties
+client_secret.json
